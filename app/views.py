@@ -16,7 +16,7 @@ from .models import Item
 # LoginRequiredMixin：未ログインのユーザーをログイン画面に誘導するMixin
 # 参考：https://docs.djangoproject.com/ja/2.1/topics/auth/default/#the-loginrequired-mixin
 
-class ItemFilterView(LoginRequiredMixin, FilterView):
+class ItemFilterView(FilterView):
     """
     ビュー：一覧表示画面
 
@@ -57,7 +57,7 @@ class ItemFilterView(LoginRequiredMixin, FilterView):
         ソート順・デフォルトの絞り込みを指定
         """
         # デフォルトの並び順として、登録時間（降順）をセットする。
-        return Item.objects.all().order_by('-created_at')
+        return Item.objects.all().order_by('name')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
