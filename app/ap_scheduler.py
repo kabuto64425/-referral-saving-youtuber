@@ -60,3 +60,7 @@ def start():
     scheduler.add_job(periodic_execution, 'cron', minute='*/30')
     #scheduler.add_job(periodic_execution, 'interval', seconds=5)
     scheduler.start()
+
+# pythonanywhereで定期実行を行うため
+if __name__ == '__main__':
+    periodic_execution()
