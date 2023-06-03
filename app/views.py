@@ -5,10 +5,16 @@ from django.utils import timezone
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
+from django.core import serializers
+from django.http import HttpResponse
 
 from .filters import ItemFilterSet
 from .forms import ItemForm
 from .models import Item
+
+import json
+
+from apiclient.discovery import build
 
 
 # 未ログインのユーザーにアクセスを許可する場合は、LoginRequiredMixinを継承から外してください。
@@ -34,6 +40,8 @@ class ItemFilterView(FilterView):
     # 1ページの表示
     paginate_by = 10
 
+    youtube_video_url = 'https://www.youtube.com/watch?v='
+
     def get(self, request, **kwargs):
         """
         リクエスト受付
@@ -57,7 +65,7 @@ class ItemFilterView(FilterView):
         ソート順・デフォルトの絞り込みを指定
         """
         # デフォルトの並び順として、登録時間（降順）をセットする。
-        return Item.objects.all().order_by('name')
+        return Item.objects.all().order_by('channel_title')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
@@ -65,6 +73,7 @@ class ItemFilterView(FilterView):
         """
         # 表示データを追加したい場合は、ここでキーを追加しテンプレート上で表示する
         # 例：kwargs['sample'] = 'sample'
+        kwargs['youtube_video_url'] = self.youtube_video_url
         return super().get_context_data(object_list=object_list, **kwargs)
 
 
@@ -140,3 +149,27 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
         item.delete()
 
         return HttpResponseRedirect(self.success_url)
+
+class JsonView():
+    post_list = serializers.serialize('json', "")
+    def get_data(request):
+        API_KEY = 'AIzaSyAuxbZaQSVD-hlRmLTukhA4_FPNBzlYL8s'
+        YOUTUBE_API_SERVICE_NAME = 'youtube'
+        YOUTUBE_API_VERSION = 'v3'
+        CHANNEL_ID_LIST = [
+            'UCr9gtTPL68r8GzSMouxpOdg',
+            'UCb9OgQn_8qXCsmztGCiyOWg',
+            'UCdoqNcqLb6b1qPzZW8wAIbg',
+            'UC6221cixGtzOBFJyLoSEuQQ',
+            'UC7Uc7ZmNOt_sPLFl7ZM83iQ'
+        ]
+
+        youtube = build(
+            YOUTUBE_API_SERVICE_NAME,
+            YOUTUBE_API_VERSION,
+            developerKey=API_KEY
+        )
+        
+        response = youtube.channels().list(part='snippet,contentDetails,statistics', id=",".join(CHANNEL_ID_LIST)).execute()
+
+        return HttpResponse(json.dumps(response), content_type="text/json-comment-filtered")

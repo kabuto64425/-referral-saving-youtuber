@@ -17,12 +17,12 @@ class ItemFilterSet(django_filters.FilterSet):
 
     # 検索フォームの「並び順」の設定
     order_by = OrderingFilter(
-        initial='チャンネル名',
+        initial='channel_title',
         fields=(
-            ('name', 'name'),
+            ('channel_title', 'channel_title'),
         ),
         field_labels={
-            'name': 'チャンネル名',
+            'channel_title': 'チャンネル名',
         },
         label='並び順'
     )
@@ -30,7 +30,22 @@ class ItemFilterSet(django_filters.FilterSet):
     class Meta:
         model = Item
         # 一部フィールドを除きモデルクラスの定義を全て引用する
-        exclude = ['created_at', 'updated_by', 'updated_at', 'created_by', 'url']
+        exclude = [
+            'created_at',
+            'updated_by',
+            'updated_at',
+            'created_by',
+            'channel_id',
+            'channel_url',
+            'video_count',
+            'uploads_playlist_id',
+            'recently_upload_video_id',
+            'recently_upload_video_title',
+            'recently_upload_video_published_at',
+            'recently_upload_video_tumbnail_url',
+            'recently_upload_video_tumbnail_width',
+            'recently_upload_video_tumbnail_height'
+        ]
         # 文字列検索のデフォルトを部分一致に変更
         filter_overrides = {
             models.CharField: {

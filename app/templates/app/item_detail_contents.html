@@ -3,7 +3,7 @@
         <p>名前</p>
     </div>
     <div class="col-7 col-sm-9">
-        <p>{{  item.name|default_if_none:"未入力"  }}</p>
+        <p>{{  item.channel_title|default_if_none:"未入力"  }}</p>
     </div>
 </div>
 <div class="row">
@@ -11,7 +11,7 @@
         <p>url</p>
     </div>
     <div class="col-7 col-sm-9">
-        <p><a href="{{  item.url|default_if_none:'未入力' }}">{{  item.url|default_if_none:"未入力" }}</a></p>
+        <p><a href="{{  item.channel_url|default_if_none:'未入力' }}">{{  item.channel_url|default_if_none:"未入力" }}</a></p>
     </div>
 </div>
 <div class="row">

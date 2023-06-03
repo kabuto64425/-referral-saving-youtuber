@@ -190,7 +190,7 @@ LOGGING = {
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-SECRET_KEY = get_random_secret_key()  
+SECRET_KEY = get_random_secret_key()
 
 try:
     from .local_settings import *

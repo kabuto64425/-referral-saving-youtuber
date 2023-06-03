@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-
 class AppConfig(AppConfig):
     """
     アプリケーション構成クラス
@@ -8,3 +7,8 @@ class AppConfig(AppConfig):
     """
     name = 'app'
     verbose_name = 'サンプルアプリ'
+
+    # 定期実行用
+    def ready(self):
+        from .ap_scheduler import start
+        start()

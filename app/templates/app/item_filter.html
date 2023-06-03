@@ -47,18 +47,26 @@
                             {# item_detail_contents.html を参考に必要な項目を追加してください #}
                             <div class="row">
                                 <div class="col-5 col-sm-3">
-                                    <p>名前</p>
+                                    <p>チャンネル</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <p>{{ item.name|default_if_none:"未入力" }}</p>
+                                    <p><a target="_blank" rel="noopener noreferrer" href="{{  item.channel_url|default_if_none:'未入力' }}">{{ item.channel_title|default_if_none:"未入力" }}</a></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5 col-sm-3">
-                                    <p>url</p>
+                                    <p>動画本数</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <p><a href="{{  item.url|default_if_none:'未入力' }}">{{  item.url|default_if_none:"未入力" }}</a></p>
+                                    <p>{{  item.video_count|default_if_none:"未入力" }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 col-sm-3">
+                                    <p>最新動画</p>
+                                </div>
+                                <div class="col-7 col-sm-9">
+                                    <p><a target="_blank" rel="noopener noreferrer" href="{{ youtube_video_url }}{{ item.recently_upload_video_id|default_if_none:'未入力' }}">{{ item.recently_upload_video_title|default_if_none:'未入力' }}</a></p>
                                 </div>
                             </div>
                             {% if request.user.is_authenticated %}
