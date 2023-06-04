@@ -11,12 +11,11 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import environ
+from dotenv import load_dotenv
 
 from django.core.management.utils import get_random_secret_key
 
-env = environ.Env()
-env.read_env('.env')
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 # 本番運用時は別の値に置き換えること。
 # 生成ツール：https://www.miniwebtool.com/django-secret-key-generator/
-SECRET_KEY = '_(u)&e-3076d7_a(gfhb85*)u-u4vwc%#qt7c7q3-t98%lvp&g'
+#SECRET_KEY = '_(u)&e-3076d7_a(gfhb85*)u-u4vwc%#qt7c7q3-t98%lvp&g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -82,7 +81,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation
@@ -193,7 +195,7 @@ SESSION_COOKIE_SECURE = True
 
 SECRET_KEY = get_random_secret_key()
 
-YOUTUBE_API_KEY = env('YOUTUBE_API_KEY')
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 try:
     from .local_settings import *
