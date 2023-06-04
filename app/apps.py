@@ -9,6 +9,6 @@ class AppConfig(AppConfig):
     verbose_name = 'サンプルアプリ'
 
     # 定期実行用
-    def ready(self):
-        from .ap_scheduler import start
-        start()
+    #def ready(self):
+        #from .ap_scheduler import start
+        #start()
