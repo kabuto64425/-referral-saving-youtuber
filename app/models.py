@@ -1,7 +1,7 @@
+import datetime
 from django.db import models
-
 from users.models import User
-
+from django.utils.timezone import make_naive
 
 class Item(models.Model):
     """
@@ -142,6 +142,14 @@ class Item(models.Model):
         リストボックスや管理画面での表示
         """
         return self.channel_title
+     
+    def daysAgoFromUploadVideo(self):
+        """
+        リストボックスや管理画面での表示
+        """
+        td = datetime.datetime.now() - make_naive(self.recently_upload_video_published_at)
+        return td.days
+        #return datetime.datetime.now()
 
     class Meta:
         """

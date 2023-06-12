@@ -38,7 +38,7 @@ class ItemFilterView(FilterView):
     strict = False
 
     # 1ページの表示
-    paginate_by = 10
+    paginate_by = 15
 
     youtube_video_url = 'https://www.youtube.com/watch?v='
 
@@ -74,7 +74,8 @@ class ItemFilterView(FilterView):
         # 表示データを追加したい場合は、ここでキーを追加しテンプレート上で表示する
         # 例：kwargs['sample'] = 'sample'
         kwargs['youtube_video_url'] = self.youtube_video_url
-        return super().get_context_data(object_list=object_list, **kwargs)
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        return context
 
 
 class ItemDetailView(LoginRequiredMixin, DetailView):
